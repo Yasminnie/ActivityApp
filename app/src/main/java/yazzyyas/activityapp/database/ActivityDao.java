@@ -16,13 +16,13 @@ public interface ActivityDao {
 	List<Activity> getAllActivities();
 
 	@Insert
-	void insertGames(Activity activities);
+	void insertActivities(Activity activities);
 
 
 	@Delete
-	void deleteGames(Activity activities);
+	void deleteActivities(Activity activities);
 
 
 	@Update
-	void updateGames(Activity activities);
+	void updateActivities(Activity activities);
 }
