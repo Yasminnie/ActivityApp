@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,6 +14,10 @@
             android:layout_width="90dp"
             android:layout_height="85dp"
             android:background="#EF883E"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="13 SEPT"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,9 +26,11 @@
             android:layout_width="242dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:text="Titel van activiteit"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toEndOf="@+id/datum"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,11 +38,13 @@
             android:id="@+id/location"
             android:layout_width="242dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Locatie van Activiteit"
+            android:layout_marginStart="28dp"
+            android:drawableLeft="@drawable/ic_location_black_24dp"
+            android:text="Locatie van activiteit"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/datum"
-            app:layout_constraintTop_toBottomOf="@id/Title" />
+            app:layout_constraintTop_toBottomOf="@id/Title"
+            app:layout_constraintVertical_bias="0.529" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
