@@ -10,12 +10,11 @@ import yazzyyas.activityapp.Activity;
 import yazzyyas.activityapp.Converters;
 
 @Database(entities = {Activity.class}, version = 1)
-@TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
 
 	public abstract ActivityDao activityDao();
 
-	private final static String NAME_DATABASE = "GameBacklog";
+	private final static String NAME_DATABASE = "ActivityDatabaseYasmin";
 	private static AppDatabase sInstance;
 
 	public static AppDatabase getInstance(Context context) {

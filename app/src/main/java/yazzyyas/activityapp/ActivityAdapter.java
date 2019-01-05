@@ -11,40 +11,41 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class ActivityRecyclerViewAdapter extends RecyclerView.Adapter<ActivityRecyclerViewAdapter.ViewHolder> {
+public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
 
-	private List<Activity> mData;
-	private LayoutInflater mInflater;
+	private Context context;
+	private List<Activity> activityData;
 	private ItemClickListener mClickListener;
 
-	public ActivityRecyclerViewAdapter(Context context, List<Activity> mData, ItemClickListener mClickListener) {
-		this.mInflater = LayoutInflater.from(context);
-		this.mData = mData;
+	public ActivityAdapter(List<Activity> activityData, ItemClickListener mClickListener) {
+		this.activityData = activityData;
 		this.mClickListener = mClickListener;
 	}
 
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-		View view = mInflater.inflate(R.layout.activity_item, parent, false);
+		this.context = parent.getContext();
+		View view = LayoutInflater.from(context).inflate(R.layout.activity_item, parent, false);
 		return new ViewHolder(view);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-		Activity activity = mData.get(position);
+		Activity activity = activityData.get(position);
 
 		holder.title.setText(activity.getTitle());
 		holder.location.setText(activity.getLocation());
+		holder.date.setText(activity.getDate());
 	}
 
 	@Override
 	public int getItemCount() {
-		return mData.size();
+		return activityData.size();
 	}
 
-	public void setmData(List<Activity> mData) {
-		this.mData = mData;
+	public void setActivityData(List<Activity> activityData) {
+		this.activityData = activityData;
 		notifyDataSetChanged(); // zegt tegen UI dat je items kan updaten in recyclerview
 	}
 
@@ -57,7 +58,7 @@ public class ActivityRecyclerViewAdapter extends RecyclerView.Adapter<ActivityRe
 			super(itemView);
 
 			title = itemView.findViewById(R.id.Title);
-			date = itemView.findViewById(R.id.date);
+			date = itemView.findViewById(R.id.datum);
 			location = itemView.findViewById(R.id.location);
 			itemView.setOnClickListener(this);
 		}
@@ -71,6 +72,13 @@ public class ActivityRecyclerViewAdapter extends RecyclerView.Adapter<ActivityRe
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public void swapList(List<Activity> newList) {
+		activityData = newList;
+		if (newList != null) {
+			this.notifyDataSetChanged();
 		}
 	}
 

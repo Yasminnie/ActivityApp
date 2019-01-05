@@ -1,5 +1,6 @@
 package yazzyyas.activityapp.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -13,7 +14,8 @@ import yazzyyas.activityapp.Activity;
 @Dao
 public interface ActivityDao {
 	@Query("Select * FROM activity")
-	List<Activity> getAllActivities();
+	public LiveData<List<Activity>> getAllActivities();
+
 
 	@Insert
 	void insertActivities(Activity activities);

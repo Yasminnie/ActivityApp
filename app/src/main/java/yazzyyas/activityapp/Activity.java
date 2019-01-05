@@ -1,29 +1,62 @@
 package yazzyyas.activityapp;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.sql.Time;
 import java.util.Date;
 
-public class Activity {
+@Entity(tableName = "activity")
+public class Activity implements Parcelable {
 
 	@PrimaryKey(autoGenerate = true)
 	private Long id;
 
+	@ColumnInfo(name = "activityTitle")
 	private String title;
+	@ColumnInfo(name = "activityDescription")
 	private String description;
-	private Time time;
+	//	private Time time;
+	@ColumnInfo(name = "activityLocation")
 	private String location;
-	private Date createdDate;
+//	private Date createdDate;
+	private String date;
 
-	public Activity(Long id, String title, String description, Time time, String location, Date createdDate) {
-		this.id = id;
+	public Activity(String title, String description, String location, String date) {
 		this.title = title;
 		this.description = description;
-		this.time = time;
+//		this.time = time;
 		this.location = location;
-		this.createdDate = createdDate;
+		this.date = date;
+//		this.createdDate = createdDate;
 	}
+
+	protected Activity(Parcel in) {
+		if (in.readByte() == 0) {
+			id = null;
+		} else {
+			id = in.readLong();
+		}
+		title = in.readString();
+		description = in.readString();
+		location = in.readString();
+		date = in.readString();
+	}
+
+	public static final Creator<Activity> CREATOR = new Creator<Activity>() {
+		@Override
+		public Activity createFromParcel(Parcel in) {
+			return new Activity(in);
+		}
+
+		@Override
+		public Activity[] newArray(int size) {
+			return new Activity[size];
+		}
+	};
 
 	public Long getId() {
 		return id;
@@ -49,14 +82,6 @@ public class Activity {
 		this.description = description;
 	}
 
-	public Time getTime() {
-		return time;
-	}
-
-	public void setTime(Time time) {
-		this.time = time;
-	}
-
 	public String getLocation() {
 		return location;
 	}
@@ -65,11 +90,31 @@ public class Activity {
 		this.location = location;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public String getDate() {
+		return date;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setDate(String date) {
+		this.date = date;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		if (id == null) {
+			dest.writeByte((byte) 0);
+		} else {
+			dest.writeByte((byte) 1);
+			dest.writeLong(id);
+		}
+		dest.writeString(title);
+		dest.writeString(description);
+		dest.writeString(location);
+		dest.writeString(date);
+	}
+
 }

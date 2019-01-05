@@ -14,7 +14,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="floatingActionButtonStyle">@style/Widget.Design.FloatingActionButton</item>
         <item name="cardViewStyle">@style/CardView</item>
-
+        <item name="bottomNavigationStyle">@style/Widget.Design.BottomNavigationView</item>
     </style>
 
     <style name="ProgressCircle">

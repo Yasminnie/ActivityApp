@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_recents"
-        android:enabled="true"
-        android:icon="@drawable/ic_vol_type_tv_dark"
-        android:title="Recents"
-        app:showAsAction="always"
-        android:actionLayout="@layout/activity_overview"/>
-
-    <item
         android:id="@+id/action_favorites"
         android:enabled="true"
         android:icon="@drawable/ic_audiotrack_light"
@@ -18,6 +10,12 @@
         app:showAsAction="ifRoom"
         android:actionLayout="@layout/activity_main"/>
 
+    <item
+        android:id="@+id/action_recents"
+        android:actionLayout="@layout/activity_overview"
+        android:enabled="true"
+        android:icon="@drawable/ic_vol_type_tv_dark"
+        android:title="Recents" />
     <item
         android:id="@+id/action_nearby"
         android:enabled="true"
