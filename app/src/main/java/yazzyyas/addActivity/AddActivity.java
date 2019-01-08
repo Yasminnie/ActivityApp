@@ -1,50 +1,48 @@
-package yazzyyas.activityapp;
+package yazzyyas.addActivity;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import yazzyyas.activityapp.Activity;
+import yazzyyas.activityapp.MainActivity;
+import yazzyyas.activityapp.R;
 import yazzyyas.activityapp.base.BaseActivity;
+import yazzyyas.activityapp.databinding.ActivityAddBinding;
+import yazzyyas.utils.LocationUtils;
 
-public class AddActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddActivity extends BaseActivity<ActivityAddBinding, AddViewModel> implements DatePickerDialog.OnDateSetListener {
 
 	private TextInputEditText titleView;
 	private TextInputEditText descriptionView;
 	private TextInputEditText location;
 	private TextView date;
 
-	//	troep geocoding
-	Button addressButton;
-	TextView addressTV;
 	TextView latLongTV;
-
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add);
 
 		titleView = findViewById(R.id.title);
 		descriptionView = findViewById(R.id.description);
@@ -60,7 +58,9 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 				String locationString = location.getText().toString();
 				String dateString = date.getText().toString();
 
-				Activity newActivity = new Activity(title, description, locationString, dateString);
+				double lat = LocationUtils.locationToLatitude(locationString, getApplicationContext());
+				double lng = LocationUtils.locationToLongitude(locationString, getApplicationContext());
+				Activity newActivity = new Activity(title, description, locationString, dateString, lat, lng);
 
 				if (!TextUtils.isEmpty(title) | !TextUtils.isEmpty(description) | !TextUtils.isEmpty(locationString)) {
 					//Prepare the return parameter and return
@@ -73,24 +73,22 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 				}
 			}
 		});
+	}
 
-//		troep geocoding
-		addressTV = (TextView) findViewById(R.id.addressTV);
-		latLongTV = (TextView) findViewById(R.id.latLongTV);
 
-		addressButton = (Button) findViewById(R.id.addressButton);
-		addressButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Log.d("testyasloc", "onClick: sd");
-				TextInputEditText locationInput = findViewById(R.id.location);
-				String address = locationInput.getText().toString();
+	@Override
+	protected Integer getLayoutId() {
+		return R.layout.activity_add;
+	}
 
-				GeoCodingLocation locationAddress = new GeoCodingLocation();
-				locationAddress.getAddressFromLocation(address,
-						getApplicationContext(), new AddActivity.GeoCoderHandler());
-			}
-		});
+	@Override
+	protected void initViewModelBinding() {
+		binding.setViewModel(viewModel);
+	}
+
+	@Override
+	protected Class<AddViewModel> getVMClass() {
+		return AddViewModel.class;
 	}
 
 	/**
@@ -120,19 +118,19 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 		setDate(cal);
 	}
 
-	public class GeoCoderHandler extends Handler {
-		@Override
-		public void handleMessage(Message message) {
-			String locationAddress;
-			switch (message.what) {
-				case 1:
-					Bundle bundle = message.getData();
-					locationAddress = bundle.getString("address");
-					break;
-				default:
-					locationAddress = null;
-			}
-			latLongTV.setText(locationAddress);
-		}
-	}
+//	public class GeoCoderHandler extends Handler {
+//		@Override
+//		public void handleMessage(Message message) {
+//			String locationAddress;
+//			switch (message.what) {
+//				case 1:
+//					Bundle bundle = message.getData();
+//					locationAddress = bundle.getString("address");
+//					break;
+//				default:
+//					locationAddress = null;
+//			}
+//			latLongTV.setText(locationAddress);
+//		}
+//	}
 }

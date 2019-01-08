@@ -32,7 +32,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
 		viewModel = ViewModelProviders.of(this).get(getVMClass());
 		initViewModelBinding();
 		ButterKnife.bind(this);
-//		sharedPrefmanager = new SharedPreferencesManager(this);
 		initProgressBar();
 	}
 

@@ -46,7 +46,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
 	public void setActivityData(List<Activity> activityData) {
 		this.activityData = activityData;
-		notifyDataSetChanged(); // zegt tegen UI dat je items kan updaten in recyclerview
+		notifyDataSetChanged();
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -65,13 +65,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
 		@Override
 		public void onClick(View view) {
-			try {
-				mClickListener.onItemClick(view, getAdapterPosition());
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			mClickListener.onItemClick(activityData.get(getAdapterPosition()));
 		}
 	}
 
@@ -84,6 +78,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
 	// parent activity will implement this method to respond to click events
 	public interface ItemClickListener {
-		void onItemClick(View view, int position) throws ExecutionException, InterruptedException;
+		void onItemClick(Activity activity);
 	}
 }

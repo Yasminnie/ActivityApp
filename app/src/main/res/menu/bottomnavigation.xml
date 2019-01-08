@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/action_recents"
-        android:actionLayout="@layout/activity_overview"
+        android:actionLayout="@layout/activity_detail"
         android:enabled="true"
         android:icon="@drawable/ic_vol_type_tv_dark"
         android:title="Recents" />
@@ -22,5 +22,5 @@
         android:icon="@drawable/cast_ic_stop_circle_filled_white"
         android:title="Nearby"
         app:showAsAction="ifRoom"
-        android:actionLayout="@layout/activity_overview"/>
+        android:actionLayout="@layout/activity_detail"/>
 </menu>

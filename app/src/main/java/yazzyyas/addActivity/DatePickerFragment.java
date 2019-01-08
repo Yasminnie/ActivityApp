@@ -1,4 +1,4 @@
-package yazzyyas.activityapp;
+package yazzyyas.addActivity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

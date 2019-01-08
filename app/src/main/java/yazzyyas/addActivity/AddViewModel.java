@@ -1,4 +1,4 @@
-package yazzyyas.activityapp;
+package yazzyyas.addActivity;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -7,14 +7,20 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import yazzyyas.activityapp.Activity;
+import yazzyyas.activityapp.ActivityRepository;
 import yazzyyas.activityapp.base.BaseViewModel;
 
-public class AddActivityViewModel extends BaseViewModel {
+public class AddViewModel extends BaseViewModel {
 
 	private ActivityRepository activityRepository;
 	private LiveData<List<Activity>> activities;
 
-	public AddActivityViewModel(@NonNull Application application, Context context) {
+	public AddViewModel(@NonNull Application application) {
+		super(application);
+	}
+
+	public AddViewModel(@NonNull Application application, Context context) {
 		super(application);
 		activityRepository = new ActivityRepository(context);
 		activities = activityRepository.getAllActivities();

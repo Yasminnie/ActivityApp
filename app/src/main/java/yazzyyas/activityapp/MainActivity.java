@@ -17,13 +17,17 @@ import java.util.concurrent.ExecutionException;
 import butterknife.BindView;
 import yazzyyas.activityapp.base.BaseActivity;
 import yazzyyas.activityapp.databinding.ActivityMainBinding;
+import yazzyyas.activityapp.models.WeatherResponse;
+import yazzyyas.addActivity.AddActivity;
+import yazzyyas.addActivity.AddViewModel;
+import yazzyyas.detailActivity.DetailsActivity;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements ActivityAdapter.ItemClickListener {
 
 	FloatingActionButton fabAddActivity;
 	private ActivityAdapter activityAdapter;
 	private List<Activity> activities = new ArrayList<>();
-	private AddActivityViewModel addActivityViewModel;
+	private AddViewModel addViewModel;
 
 	@BindView(R.id.activityRecyclerView)
 	RecyclerView activityRecyclerView;
@@ -35,13 +39,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initObservers();
 		this.activityAdapter = new ActivityAdapter(activities, this);
 		activityRecyclerView.setAdapter(activityAdapter);
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 		activityRecyclerView.setLayoutManager(layoutManager);
 
-		addActivityViewModel = new AddActivityViewModel(getApplication(), getApplicationContext());
-		addActivityViewModel.getActivities().observe(this, new Observer<List<Activity>>() {
+		addViewModel = new AddViewModel(getApplication(), getApplicationContext());
+		addViewModel.getActivities().observe(this, new Observer<List<Activity>>() {
 			@Override
 			public void onChanged(@Nullable List<Activity> onActivities) {
 				activities = onActivities;
@@ -49,7 +54,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 			}
 		});
 
-//		viewmodel gebruiken met observer voor dit
 		fabAddActivity = findViewById(R.id.fabAddActivity);
 		fabAddActivity.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -67,6 +71,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 		} else {
 			activityAdapter.swapList(activities);
 		}
+	}
+
+	private void initObservers() {
+//		viewModel.getWeatherData().observe(this, new Observer<WeatherResponse>() {
+//			@Override
+//			public void onChanged(@Nullable WeatherResponse weatherResponse) {
+//
+//			}
+//		});
+	}
+
+	private void openActivity(Activity activity) {
+		Intent intent = new Intent(this, DetailsActivity.class);
+		intent.putExtra(EXTRA_ACTIVITY, activity);
+		startActivity(intent);
 	}
 
 	@Override
@@ -88,14 +107,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		if (requestCode == REQUESTCODE) {
 			if (resultCode == RESULT_OK) {
-				Activity insertBucket = data.getParcelableExtra(MainActivity.EXTRA_ACTIVITY);
-				addActivityViewModel.insert(insertBucket);
+//				Activity insertBucket = data.getParcelableExtra(MainActivity.EXTRA_ACTIVITY);
+				Activity insertBucket = (Activity) data.getSerializableExtra(MainActivity.EXTRA_ACTIVITY);
+				addViewModel.insert(insertBucket);
 			}
 		}
 	}
 
 	@Override
-	public void onItemClick(View view, int position) throws ExecutionException, InterruptedException {
-		Log.d("yasjoe", "onItemClick: item van activiteit");
+	public void onItemClick(Activity activity) {
+		openActivity(activity);
 	}
 }
