@@ -13,11 +13,10 @@ import java.util.concurrent.ExecutionException;
 
 public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
 
-	private Context context;
 	private List<Activity> activityData;
 	private ItemClickListener mClickListener;
 
-	public ActivityAdapter(List<Activity> activityData, ItemClickListener mClickListener) {
+	ActivityAdapter(List<Activity> activityData, ItemClickListener mClickListener) {
 		this.activityData = activityData;
 		this.mClickListener = mClickListener;
 	}
@@ -25,7 +24,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-		this.context = parent.getContext();
+		Context context = parent.getContext();
 		View view = LayoutInflater.from(context).inflate(R.layout.activity_item, parent, false);
 		return new ViewHolder(view);
 	}
@@ -42,11 +41,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 	@Override
 	public int getItemCount() {
 		return activityData.size();
-	}
-
-	public void setActivityData(List<Activity> activityData) {
-		this.activityData = activityData;
-		notifyDataSetChanged();
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

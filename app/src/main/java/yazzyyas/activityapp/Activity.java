@@ -35,30 +35,6 @@ public class Activity implements Serializable {
 		this.longitude = longitude;
 	}
 
-	protected Activity(Parcel in) {
-		if (in.readByte() == 0) {
-			id = null;
-		} else {
-			id = in.readLong();
-		}
-		title = in.readString();
-		description = in.readString();
-		location = in.readString();
-		date = in.readString();
-	}
-
-//	public static final Creator<Activity> CREATOR = new Creator<Activity>() {
-//		@Override
-//		public Activity createFromParcel(Parcel in) {
-//			return new Activity(in);
-//		}
-//
-//		@Override
-//		public Activity[] newArray(int size) {
-//			return new Activity[size];
-//		}
-//	};
-
 	public Long getId() {
 		return id;
 	}
@@ -114,25 +90,4 @@ public class Activity implements Serializable {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-
-//	@Override
-//	public int describeContents() {
-//		return 0;
-//	}
-//
-//	@Override
-//	public void writeToParcel(Parcel dest, int flags) {
-//		if (id == null) {
-//			dest.writeByte((byte) 0);
-//		} else {
-//			dest.writeByte((byte) 1);
-//			dest.writeLong(id);
-//		}
-//		dest.writeString(title);
-//		dest.writeString(description);
-//		dest.writeString(location);
-//		dest.writeString(date);
-//		dest.writeDouble(latitude);
-//		dest.writeDouble(longitude);
-//	}
 }

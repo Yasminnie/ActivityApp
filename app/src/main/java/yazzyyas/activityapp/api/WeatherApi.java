@@ -1,4 +1,4 @@
-package yazzyyas.activityapp;
+package yazzyyas.activityapp.api;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherApi {
 
-	final static String BASE_URL = "http://api.openweathermap.org/";
+	private final static String BASE_URL = "http://api.openweathermap.org/";
 	final static String API_KEY = "df9dd46fb4e603b4997ffd6ececa8303";
 
 	public static WeatherService create() {

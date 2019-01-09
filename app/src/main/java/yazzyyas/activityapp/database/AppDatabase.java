@@ -12,7 +12,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 	public abstract ActivityDao activityDao();
 
-	private final static String NAME_DATABASE = "ActivitiesDbTestj";
+	private final static String NAME_DATABASE = "Activities";
 	private static AppDatabase sInstance;
 
 	public static AppDatabase getInstance(Context context) {

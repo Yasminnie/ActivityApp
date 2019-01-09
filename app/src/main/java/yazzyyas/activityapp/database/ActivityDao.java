@@ -14,7 +14,7 @@ import yazzyyas.activityapp.Activity;
 @Dao
 public interface ActivityDao {
 	@Query("Select * FROM activity")
-	public LiveData<List<Activity>> getAllActivities();
+	LiveData<List<Activity>> getAllActivities();
 
 
 	@Insert

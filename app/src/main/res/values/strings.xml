@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ActivityApp</string>
+    <string name="description">Description ..</string>
+    <string name="title">Title ..</string>
+    <string name="location">Address ..</string>
+    <string name="pic_date">Pick Date</string>
+    <string name="exampleDate">13 SEPT</string>
+    <string name="exampleTitle">Titel van activiteit</string>
+    <string name="exampleLocation">Locatie van activiteit</string>
+    <string name="choose_date">Choose date</string>
+    <string name="titel">Title</string>
+    <string name="description_tv">Description</string>
+    <string name="enter_address">Enter address</string>
+    <string name="date">Date</string>
+    <string name="descriptionDetail">Description:</string>
+    <string name="addressDetail">Address:</string>
 </resources>

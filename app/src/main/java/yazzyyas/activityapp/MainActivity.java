@@ -7,24 +7,20 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import yazzyyas.activityapp.base.BaseActivity;
 import yazzyyas.activityapp.databinding.ActivityMainBinding;
-import yazzyyas.activityapp.models.WeatherResponse;
 import yazzyyas.addActivity.AddActivity;
 import yazzyyas.addActivity.AddViewModel;
 import yazzyyas.detailActivity.DetailsActivity;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements ActivityAdapter.ItemClickListener {
 
-	FloatingActionButton fabAddActivity;
 	private ActivityAdapter activityAdapter;
 	private List<Activity> activities = new ArrayList<>();
 	private AddViewModel addViewModel;
@@ -39,29 +35,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		addViewModel = new AddViewModel(getApplication(), getApplicationContext());
 		initObservers();
+
 		this.activityAdapter = new ActivityAdapter(activities, this);
 		activityRecyclerView.setAdapter(activityAdapter);
 		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 		activityRecyclerView.setLayoutManager(layoutManager);
-
-		addViewModel = new AddViewModel(getApplication(), getApplicationContext());
-		addViewModel.getActivities().observe(this, new Observer<List<Activity>>() {
-			@Override
-			public void onChanged(@Nullable List<Activity> onActivities) {
-				activities = onActivities;
-				updateUI();
-			}
-		});
-
-		fabAddActivity = findViewById(R.id.fabAddActivity);
-		fabAddActivity.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), AddActivity.class);
-				startActivityForResult(intent, REQUESTCODE);
-			}
-		});
 	}
 
 	private void updateUI() {
@@ -74,12 +54,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 	}
 
 	private void initObservers() {
-//		viewModel.getWeatherData().observe(this, new Observer<WeatherResponse>() {
-//			@Override
-//			public void onChanged(@Nullable WeatherResponse weatherResponse) {
-//
-//			}
-//		});
+		addViewModel.getActivities().observe(this, onActivities -> {
+			activities = onActivities;
+			updateUI();
+		});
+	}
+
+	public void addActivity(View view) {
+		Intent intent = new Intent(getApplicationContext(), AddActivity.class);
+		startActivityForResult(intent, REQUESTCODE);
 	}
 
 	private void openActivity(Activity activity) {
@@ -107,7 +90,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		if (requestCode == REQUESTCODE) {
 			if (resultCode == RESULT_OK) {
-//				Activity insertBucket = data.getParcelableExtra(MainActivity.EXTRA_ACTIVITY);
 				Activity insertBucket = (Activity) data.getSerializableExtra(MainActivity.EXTRA_ACTIVITY);
 				addViewModel.insert(insertBucket);
 			}

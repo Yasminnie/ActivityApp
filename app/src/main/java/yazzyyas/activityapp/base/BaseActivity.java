@@ -19,7 +19,6 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends BaseV
 
 	protected VDB binding;
 	protected VM viewModel;
-//	protected SharedPreferencesManager sharedPrefmanager;
 
 	@BindView(R.id.progress_circle)
 	@Nullable
